@@ -1,0 +1,86 @@
+:root {
+  --lp-canvas: #b8cec9;
+  --lp-surface: #f3e8cf;
+  --lp-surface-raised: #fff6df;
+  --lp-surface-side: #dce1d2;
+  --lp-text: #23343b;
+  --lp-text-muted: #49656a;
+  --lp-structure: #2f6f73;
+  --lp-structure-raised: #5d9ba6;
+  --lp-on-structure: #f4f0e4;
+  --lp-action: #f2c14e;
+  --lp-action-raised: #f7d77c;
+  --lp-action-side: #d99a36;
+  --lp-action-depth: #a5684a;
+  --lp-alert: #e76f51;
+  --lp-alert-text: #a74732;
+  --lp-success: #38613f;
+  --lp-success-raised: #91b77a;
+  --lp-disabled-surface: #d7ded2;
+  --lp-disabled-text: #5f6e6b;
+  --lp-border-subtle: #2f6f7340;
+  --lp-scrim: rgb(35 52 59 / 75%);
+
+  --lp-state-available: var(--lp-action);
+  --lp-state-owned: var(--lp-success);
+  --lp-state-active: var(--lp-action);
+  --lp-state-locked: var(--lp-text-muted);
+  --lp-state-error: var(--lp-alert-text);
+  --lp-focus: var(--lp-structure);
+
+  --lp-cut-xs: 3px;
+  --lp-cut-sm: 6px;
+  --lp-cut-md: 8px;
+  --lp-cut-lg: 10px;
+  --lp-cut-xl: 18px;
+  --lp-depth-sm: 2px;
+  --lp-depth-md: 4px;
+  --lp-depth-lg: 8px;
+  --lp-shape-panel: polygon(var(--lp-cut-lg) 0, calc(100% - var(--lp-cut-xl)) 0, 100% var(--lp-cut-xl), 100% 100%, var(--lp-cut-md) 100%, 0 calc(100% - var(--lp-cut-md)), 0 var(--lp-cut-lg));
+  --lp-shape-control: polygon(var(--lp-cut-lg) 0, 100% 0, 100% calc(100% - var(--lp-cut-lg)), calc(100% - var(--lp-cut-lg)) 100%, 0 100%, 0 var(--lp-cut-lg));
+  --lp-shape-tag: polygon(var(--lp-cut-sm) 0, 100% 0, calc(100% - var(--lp-cut-sm)) 100%, 0 100%);
+
+  --lp-face-paper: linear-gradient(145deg, var(--lp-surface-raised) 0 18%, var(--lp-surface) 18% 78%, var(--lp-surface-side) 78%);
+  --lp-face-action: linear-gradient(145deg, var(--lp-action-raised) 0 18%, var(--lp-action) 18% 76%, var(--lp-action-side) 76%);
+  --lp-shadow-panel: 4px 4px 0 var(--lp-structure);
+  --lp-shadow-control: 0 4px 0 var(--lp-action-depth);
+
+  --lp-space-1: 4px;
+  --lp-space-2: 8px;
+  --lp-space-3: 12px;
+  --lp-space-4: 16px;
+  --lp-space-5: 24px;
+  --lp-space-6: 32px;
+  --lp-target-min: 44px;
+  --lp-focus-width: 3px;
+
+  --lp-font-sans: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  --lp-font-mono: Consolas, "Microsoft YaHei", monospace;
+  --lp-text-decoration: 11px;
+  --lp-text-small: 12px;
+  --lp-text-label: 13px;
+  --lp-text-body: 15px;
+  --lp-text-title: 21px;
+  --lp-text-heading: 24px;
+  --lp-text-number: 30px;
+  --lp-leading-body: 1.55;
+  --lp-leading-title: 1.25;
+  --lp-tracking-wide: .06em;
+  --lp-tracking-code: .16em;
+
+  --lp-duration-press: 90ms;
+  --lp-duration-hover: 120ms;
+  --lp-duration-pop: 180ms;
+  --lp-duration-scene: 350ms;
+  --lp-ease-out: cubic-bezier(.2, .8, .2, 1);
+  --lp-ease-back: cubic-bezier(.2, .9, .3, 1.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lp-duration-press: 0ms;
+    --lp-duration-hover: 0ms;
+    --lp-duration-pop: 0ms;
+    --lp-duration-scene: 0ms;
+  }
+}

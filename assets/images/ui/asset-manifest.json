@@ -1,0 +1,50 @@
+{
+  "project": "Endless Shift",
+  "scope": "low-poly UI visual sample",
+  "assets": [
+    {
+      "id": "workstation-diorama",
+      "path": "assets/images/ui/workstation-diorama.svg",
+      "role": "hero workstation visual target",
+      "size": "480x416",
+      "format": "svg",
+      "source": {
+        "kind": "original",
+        "tool": "hand-authored vector polygons",
+        "license": "Project original"
+      },
+      "technical_checks": {
+        "xml_valid": true,
+        "transparent_background": true,
+        "no_raster_images": true,
+        "no_gradients": true,
+        "no_filters": true,
+        "no_scripts_or_animation": true
+      },
+      "technical_checks_passed": true,
+      "approval_status": "pending_native_scale_visual_review"
+    },
+    {
+      "id": "wage-block",
+      "path": "assets/images/ui/wage-block.svg",
+      "role": "resource block icon",
+      "size": "24x24",
+      "format": "svg",
+      "source": {
+        "kind": "original",
+        "tool": "hand-authored vector polygons",
+        "license": "Project original"
+      },
+      "technical_checks": {
+        "xml_valid": true,
+        "transparent_background": true,
+        "no_raster_images": true,
+        "no_gradients": true,
+        "no_filters": true,
+        "no_scripts_or_animation": true
+      },
+      "technical_checks_passed": true,
+      "approval_status": "pending_native_scale_visual_review"
+    }
+  ]
+}

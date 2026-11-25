@@ -361,6 +361,7 @@ function updateBuildingCards() {
       hallMetrics.textContent = `奖杯 ${formatNumber(current.originalTrophies)} · 每座基础 ${money(current.hallBaseProduction)} · 自身倍率 ×${formatNumber(selfMultiplier)} · 其他设施倍率 ×${formatNumber(otherMultiplier)}`;
     }
     const unavailable = model.status === 'NEED_RESOURCE';
+    card.querySelector('.building-buy small').textContent = unavailable ? '工资不足' : '点击采购';
     card.setAttribute('aria-disabled', String(unavailable));
     card.classList.toggle('insufficient', unavailable);
     card.setAttribute('aria-label', `${model.viewModel.name}，当前 ${count} 个，单个每秒产出 ${money(unitOutput)}，当前总产出每秒 ${money(totalOutput)}，价格 ${money(model.costs[0]?.value || 0)}`);
@@ -403,7 +404,7 @@ function renderUpgradeRail() {
 function workView() {
   return `<div id="skillMount"></div><section class="work-zone">
     <div class="office-window"><div class="window-view"></div></div>
-    <button class="work-btn" data-action="work" aria-label="点击工位搬砖"><img class="workstation-img" src="assets/images/workstation-neon.svg" alt="霓虹夜班工作站，点击工位任意位置搬砖"></button>
+    <button class="work-btn" data-action="work" aria-label="点击工位搬砖"><img class="workstation-img" src="assets/images/ui/workstation-diorama.svg" alt="桌面微缩办公室，点击工位搬砖"></button>
     <div class="work-caption">今日待办：∞　　距离下班：--:--　　当前职级：R${state().progression.reincarnations}</div></section>`;
 }
 const QUICK_SKILL_LIMIT = 12;

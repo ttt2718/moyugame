@@ -726,3 +726,101 @@ body.royal-market-open { overflow: hidden; }
 .announcement-card strong { color: var(--text); font-size: 16px; line-height: 1.5; }
 .announcement-card span { color: var(--green); font-size: 12px; }
 .announcement-card:hover:not(:disabled) { background: #2c3825; }
+
+
+/* Low-poly main shell: shared tokens, existing layout and interaction hooks. */
+html { color-scheme: light; }
+body { background: var(--lp-canvas); color: var(--lp-text); }
+.topbar { border-bottom: 4px solid var(--lp-action); background: var(--lp-structure); color: var(--lp-on-structure); }
+.brand h1 { color: var(--lp-on-structure); }
+.brand small, .brand-version, .top-actions span { color: var(--lp-on-structure); opacity: .82; }
+.rank { color: var(--lp-action); }
+.player-identity, .work-context .work-player-identity { border: 1px solid var(--lp-border-subtle); border-radius: 0; background: transparent; color: var(--lp-on-structure); }
+.player-identity::before, .work-player-identity::before { border-radius: 0; background: var(--lp-action); transform: rotate(45deg); }
+.player-identity strong, .work-player-identity strong { color: var(--lp-action); }
+.top-actions button { border: 1px solid var(--lp-surface-side); background: var(--lp-surface); color: var(--lp-text); box-shadow: 2px 2px 0 var(--lp-text); }
+.top-actions button:hover:not(:disabled) { border-color: var(--lp-action); background: var(--lp-surface-raised); color: var(--lp-text); }
+.top-actions button.active { border-color: var(--lp-action-side); background: var(--lp-action); color: var(--lp-text); }
+.top-actions button:focus-visible, .app-nav button:focus-visible { outline-color: var(--lp-action); }
+
+.resource-bar { border-bottom: 2px solid var(--lp-structure); background: var(--lp-face-paper); }
+.resource-bar > div { position: relative; border-right: 0; background: transparent; }
+.resource-bar > div::after { content: ""; position: absolute; top: 20%; bottom: 20%; right: 0; width: 1px; background: var(--lp-border-subtle); transform: skewY(-22deg); }
+.resource-bar > div:last-child::after { display: none; }
+.resource-bar small { color: var(--lp-text-muted); font-weight: 700; }
+.resource-bar strong { color: var(--lp-text); font-variant-numeric: tabular-nums; }
+.resource-bar > div:first-child strong { color: var(--lp-structure); }
+.mana-bar { border-bottom: 1px solid var(--lp-structure); background: var(--lp-surface-side); }
+.mana-copy span, .mana-copy small { color: var(--lp-text-muted); }
+.mana-copy strong { color: var(--lp-text); font-variant-numeric: tabular-nums; }
+.mana-track { border: 1px solid var(--lp-structure); background: var(--lp-canvas); box-shadow: none; clip-path: var(--lp-shape-tag); }
+.mana-track > div { background: linear-gradient(100deg, var(--lp-action-side) 0 30%, var(--lp-action) 30% 78%, var(--lp-action-raised) 78%); }
+
+.left-rail, .facility-rail { border-color: var(--lp-text); background: var(--lp-structure); }
+.app-nav button { border: 1px solid transparent; background: transparent; color: var(--lp-on-structure); box-shadow: none; }
+.app-nav button:hover:not(:disabled) { border-color: var(--lp-surface); background: var(--lp-surface); color: var(--lp-text); }
+.app-nav button.active { border-color: var(--lp-action-side); background: var(--lp-action); color: var(--lp-text); clip-path: var(--lp-shape-tag); filter: drop-shadow(2px 2px 0 var(--lp-text)); }
+.rail-shortcuts { border-top-color: var(--lp-border-subtle); }
+.rail-section-head small, .facility-head small, .faction-coin-head { color: var(--lp-action); }
+.rail-section-head button { border-color: var(--lp-surface-side); background: var(--lp-surface); color: var(--lp-text); }
+.rail-empty { color: var(--lp-on-structure); }
+.faction-coin-dock { border-top-color: var(--lp-border-subtle); background: var(--lp-text); }
+.faction-coin-list span { color: var(--lp-on-structure); }
+.faction-coin-list b { color: var(--lp-action); }
+.facility-head { border-bottom-color: var(--lp-border-subtle); background: var(--lp-structure); }
+.facility-head h2 { color: var(--lp-on-structure); }
+
+.buy-controls button { border: 1px solid var(--lp-structure); background: var(--lp-surface); color: var(--lp-text); box-shadow: 2px 2px 0 var(--lp-text); }
+.buy-controls button:hover:not(:disabled) { border-color: var(--lp-action); background: var(--lp-surface-raised); color: var(--lp-text); }
+.buy-controls button.active { border-color: var(--lp-action-side); background: var(--lp-action); color: var(--lp-text); clip-path: var(--lp-shape-tag); box-shadow: 2px 2px 0 var(--lp-action-depth); }
+
+.work-context small { color: var(--lp-structure); font-weight: 800; }
+.work-context span { color: var(--lp-text-muted); }
+.work-context .work-player-identity { border-color: var(--lp-border-subtle); background: var(--lp-surface); color: var(--lp-text-muted); }
+.work-context .work-player-identity strong { color: var(--lp-structure); }
+.retirement-card { border: 1px solid var(--lp-structure); background: var(--lp-face-paper); box-shadow: 4px 4px 0 var(--lp-structure); }
+.retirement-card.ready { border-color: var(--lp-action-side); }
+.retirement-title strong { color: var(--lp-structure); }
+.retirement-title small, .retirement-values { color: var(--lp-text-muted); }
+.retirement-values b { color: var(--lp-structure); }
+.retirement-btn { border-color: var(--lp-structure); background: var(--lp-structure); color: var(--lp-on-structure); }
+.retirement-feedback { color: var(--lp-success); }
+.work-summary { gap: 8px; border: 0; background: transparent; }
+.work-summary div { border: 1px solid var(--lp-structure); background: var(--lp-surface); box-shadow: 3px 3px 0 var(--lp-structure); }
+.work-summary small { color: var(--lp-text-muted); }
+.work-summary strong { color: var(--lp-text); font-variant-numeric: tabular-nums; }
+.event-strip > button { border-color: var(--lp-structure); background: var(--lp-surface); color: var(--lp-structure); }
+#latestLog { color: var(--lp-text-muted); }
+
+button.primary, .retirement-card.ready .retirement-btn {
+  min-height: 44px;
+  border: 0;
+  background: var(--lp-face-action);
+  color: var(--lp-text);
+  clip-path: var(--lp-shape-control);
+  filter: drop-shadow(var(--lp-shadow-control));
+  font-weight: 800;
+  transition: transform var(--lp-duration-hover) var(--lp-ease-out), filter var(--lp-duration-hover) var(--lp-ease-out);
+}
+button.primary:hover:not(:disabled), .retirement-card.ready .retirement-btn:hover:not(:disabled) { border: 0; background: var(--lp-face-action); color: var(--lp-text); transform: translateY(-1px); filter: drop-shadow(0 5px 0 var(--lp-action-depth)); }
+button.primary:active:not(:disabled), .retirement-card.ready .retirement-btn:active:not(:disabled) { transform: translateY(2px); filter: drop-shadow(0 2px 0 var(--lp-action-depth)); }
+button.primary:focus-visible, .retirement-card.ready .retirement-btn:focus-visible { outline: 0; filter: drop-shadow(0 0 3px var(--lp-surface-raised)) drop-shadow(0 0 6px var(--lp-focus)); }
+button.primary:disabled { background: var(--lp-disabled-surface); color: var(--lp-disabled-text); filter: none; }
+
+.intro { background: var(--lp-scrim); backdrop-filter: none; }
+.intro-card { border: 1px solid var(--lp-structure); background: var(--lp-face-paper); color: var(--lp-text); box-shadow: 8px 8px 0 var(--lp-structure); clip-path: var(--lp-shape-panel); }
+.intro-card h1 { color: var(--lp-text); }
+.intro-card p, .intro-card small { color: var(--lp-text-muted); }
+.intro-card .quote { color: var(--lp-alert-text); }
+.eyebrow { color: var(--lp-structure); }
+.user-id-form label { color: var(--lp-text); }
+.user-id-form input, .action-row input, textarea { border-color: var(--lp-structure); background: var(--lp-surface-raised); color: var(--lp-text); }
+.user-id-form input:focus, .action-row input:focus-visible, textarea:focus-visible { border-color: var(--lp-focus); outline-color: var(--lp-focus); }
+
+@media (max-width: 900px) {
+  .app-nav { border-top: 3px solid var(--lp-action); background: var(--lp-structure); }
+  .app-nav button { border: 0; border-right: 1px solid var(--lp-border-subtle); background: transparent; color: var(--lp-on-structure); }
+  .app-nav button.active { background: var(--lp-action); color: var(--lp-text); filter: none; }
+  .work-summary { gap: 5px; }
+  .work-summary div { box-shadow: 2px 2px 0 var(--lp-structure); }
+}

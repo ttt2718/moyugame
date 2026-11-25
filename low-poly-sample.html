@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#B8CEC9">
+  <title>无限工时 · 桌面微缩办公室</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/ui/wage-block.svg">
+  <link rel="stylesheet" href="src/ui/low-poly-tokens.css">
+  <link rel="stylesheet" href="low-poly-sample.css">
+</head>
+<body>
+  <a class="skip-link" href="#sampleMain">跳到视觉样板</a>
+  <header class="sample-header">
+    <div class="sample-brand">
+      <span class="brand-cube" aria-hidden="true"><i></i></span>
+      <div><span>ENDLESS SHIFT / DESK 01</span><h1>桌面微缩办公室</h1></div>
+    </div>
+    <span class="sample-chip">LOW-POLY SYSTEM</span>
+  </header>
+
+  <main class="sample-shell" id="sampleMain" tabindex="-1">
+    <section class="sample-toolbar" aria-label="工资与搬砖操作">
+      <article class="resource-block" aria-label="可用工资">
+        <img src="assets/images/ui/wage-block.svg" alt="" width="40" height="40">
+        <div class="resource-copy"><span>可用工资</span><strong id="coins">¥ 128</strong><small>每秒产出 <b id="production">¥ 0</b></small></div>
+        <span class="resource-index" aria-hidden="true">01</span>
+      </article>
+      <button class="primary-action" id="workButton" type="button"><span>打卡搬砖</span><small>每次 +¥1</small></button>
+    </section>
+
+    <div class="sample-layout">
+      <section class="stage-panel" aria-labelledby="stageTitle">
+        <div class="panel-heading"><div><span>WORKSTATION / 001</span><h2 id="stageTitle">今天的工位</h2></div><span class="panel-tag">运行中</span></div>
+        <div class="stage-scene" id="stageScene">
+          <div class="scene-shape scene-shape-a" aria-hidden="true"></div>
+          <div class="scene-shape scene-shape-b" aria-hidden="true"></div>
+          <img class="workstation-model" src="assets/images/ui/workstation-diorama.svg" alt="墨青显示器、芥末黄台灯、档案和绿植组成的低多边形工位模型">
+          <div class="coin-layer" id="coinLayer" aria-hidden="true"></div>
+          <p class="scene-caption">一张办公桌，一份永远做不完的工作。</p>
+        </div>
+      </section>
+
+      <aside class="parts-panel" aria-labelledby="partsTitle">
+        <div class="parts-heading"><span>SUPPLY TRAY</span><h2 id="partsTitle">设施零件</h2></div>
+        <button class="facility-card" id="facilityButton" type="button" aria-describedby="facilityInfo">
+          <span class="part-number" aria-hidden="true">01</span>
+          <img class="facility-icon" src="assets/images/content-icons/buildings/farm.svg" alt="" width="64" height="64">
+          <span class="facility-copy"><strong>见习工位</strong><span id="facilityInfo">组装后每秒产出 +¥1</span><small>当前库存 <b id="facilityCount">0</b></small></span>
+          <span class="facility-price"><strong>¥ 15</strong><small id="facilityAction">点击采购</small></span>
+        </button>
+        <div class="parts-note"><span aria-hidden="true">◆</span><p>同一光源、同一厚度。<br>采购后零件进入工位。</p></div>
+      </aside>
+    </div>
+
+    <section class="design-notes" aria-label="视觉规范摘要">
+      <div><span>01</span><p><strong>块面</strong>顶面、正面与 4px 底面</p></div>
+      <div><span>02</span><p><strong>材质</strong>墨青框架与奶油纸面</p></div>
+      <div><span>03</span><p><strong>反馈</strong>下沉、浮字与少量纸屑</p></div>
+    </section>
+    <p class="sr-only" id="demoStatus" role="status"></p>
+  </main>
+  <script type="module" src="low-poly-sample.js"></script>
+</body>
+</html>
