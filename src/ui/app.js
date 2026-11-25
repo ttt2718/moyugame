@@ -645,6 +645,7 @@ function morePanel() {
   const completed = Object.keys(state().story.completed).map(definition).filter(Boolean);
   const reincarnation = game.select('reincarnation');
   return `<div class="panel-head"><div><h2>职业与存档</h2><p>管理本地档案，并查看剧情。</p></div></div>
+    <section class="subsection announcement-section"><h3>公告</h3><div class="announcement-list">${announcements.map(item => `<button class="announcement-card" data-action="replay-announcement" data-id="${item.id}"><strong>${item.shortTitle}</strong><span>查看完整公告</span></button>`).join('')}</div></section>
     ${reincarnationPowerCard()}
     ${reincarnation.visible ? `<article class="card"><h3>投胎进入 R${reincarnation.nextR}</h3><p>消耗当前全部期权，保留奖杯与历史记录，开启更深层的组织周期。</p><button data-action="reincarnate">投胎</button></article>` : ''}
     <section class="subsection mobile-nav"><h3>职业统计</h3><p>查看本轮、本次职业、本次重述与全部历史数据。</p><button data-tab="stats">查看职业统计</button></section>
@@ -807,6 +808,7 @@ function refresh(message = null) {
   const structural = message?.commandType !== 'tick' || message?.changedPaths.some(path => /^(permanentUnlocks|story|owned|buildings|selections)/.test(path));
   if (activeTab !== 'work' && structural) renderPanel(); else updatePanel();
   syncStories();
+  maybeShowAnnouncement();
   refreshRoyalMarket(message);
 }
 let pendingAlignmentId = null;
@@ -836,6 +838,14 @@ function importSave(raw, errorMessage) {
 const modal = createStoryModal({
   document,
   onClose: ({ id, action, replay }) => {
+    if (id.startsWith('ui.announcement.')) {
+      try {
+        const seen = new Set(JSON.parse(localStorage.getItem('endless-shift-announcements-seen') || '[]'));
+        seen.add(id.slice('ui.announcement.'.length));
+        localStorage.setItem('endless-shift-announcements-seen', JSON.stringify([...seen]));
+      } catch {}
+      return;
+    }
     if (id === 'ui.alignment.confirm') { pendingAlignmentId = null; return; }
     if (id === 'ui.save-recovery.confirm') { pendingSaveRecovery = null; return; }
     if (id === 'ui.hard-reset.confirm') return;
@@ -880,9 +890,39 @@ const modal = createStoryModal({
   },
 });
 function syncStories() {
-  if (modal.current?.replay || ['ui.alignment.confirm', 'ui.hard-reset.confirm', 'ui.save-recovery.confirm', 'ui.retirement.confirm'].includes(modal.current?.story.id)) return;
+  if (modal.current?.replay || modal.current?.story.id.startsWith('ui.announcement.')
+    || ['ui.alignment.confirm', 'ui.hard-reset.confirm', 'ui.save-recovery.confirm', 'ui.retirement.confirm'].includes(modal.current?.story.id)) return;
   const next = game.select('storyQueue')[0];
   if (next && modal.current?.story.id !== next.id) modal.show({ story: next });
+}
+let announcements = [];
+function maybeShowAnnouncement() {
+  if (!announcements.length || modal.isOpen) return;
+  let seen = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem('endless-shift-announcements-seen') || '[]');
+    if (Array.isArray(stored)) seen = stored;
+  } catch {}
+  const announcement = announcements.find(item => !seen.includes(item.id));
+  if (!announcement) return;
+  modal.show({ story: {
+    id: `ui.announcement.${announcement.id}`,
+    title: announcement.title,
+    paragraphs: announcement.body,
+    buttonLabel: announcement.buttonLabel || '知道了，继续游戏',
+  } });
+}
+async function loadAnnouncement() {
+  try {
+    const response = await fetch('announcement.json', { cache: 'no-store' });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!Array.isArray(data.announcements)) return;
+    announcements = data.announcements.filter(item => item.enabled
+      && typeof item.id === 'string' && typeof item.title === 'string'
+      && typeof item.shortTitle === 'string' && Array.isArray(item.body));
+    maybeShowAnnouncement();
+  } catch {}
 }
 function replayStory(id) {
   const story = definition(id);
@@ -1278,6 +1318,17 @@ document.addEventListener('click', event => {
   if (action === 'toggle-log') { setEventLogOpen($('eventLog').hidden); return; }
   if (action === 'close-log') { setEventLogOpen(false, true); return; }
   if (action === 'close-panel') { closeAuxPanel(); return; }
+  if (action === 'replay-announcement') {
+    const announcement = announcements.find(item => item.id === id);
+    if (!announcement) { notify('更新公告暂时无法加载，请稍后重试', true); return; }
+    modal.show({ story: {
+      id: `ui.announcement.${announcement.id}`,
+      title: announcement.title,
+      paragraphs: announcement.body,
+      buttonLabel: '关闭公告',
+    } });
+    return;
+  }
   if (action === 'abdicate') {
     if (!game.select('retirement').eligible) {
       commandResult(game.dispatch({ type: 'abdicate' }));
@@ -1471,6 +1522,7 @@ async function bootstrap() {
   if (state().stats.total.clicks > 0 || Object.keys(state().buildings).length || state().story.pending.length || Object.keys(state().story.completed).length) $('intro').classList.add('hidden');
   game.subscribe(message => { if (message.type === 'commit') factFeedback(message.facts, message.commandType); refresh(message); });
   refresh();
+  loadAnnouncement();
   lastTick = performance.now();
   setInterval(() => {
     const now = performance.now(); const delta = (now - lastTick) / 1000; lastTick = now;

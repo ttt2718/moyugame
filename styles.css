@@ -719,3 +719,10 @@ body.royal-market-open { overflow: hidden; }
   .trophy-icon-button { padding: 4px; }
   .trophy-icon-button small { font-size: 8px; }
 }
+
+.announcement-section { margin-bottom: 32px; }
+.announcement-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; align-items: stretch; }
+.announcement-card { min-height: 140px; padding: 22px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 12px; border: 1px solid #71865d; border-radius: 12px; background: linear-gradient(110deg, #263021, #20261d); text-align: left; }
+.announcement-card strong { color: var(--text); font-size: 16px; line-height: 1.5; }
+.announcement-card span { color: var(--green); font-size: 12px; }
+.announcement-card:hover:not(:disabled) { background: #2c3825; }
