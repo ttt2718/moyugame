@@ -1644,6 +1644,15 @@ test('production clears saved mana override and rejects direct setting while dev
   assert.equal(rejected.reason, 'DEVELOPER_LOCKED');
   assert.equal(await production.game.unlockDeveloper('0000'), false);
   assert.equal(await verifyDeveloperPassword('0000'), false);
+  assert.equal(production.game.dispatch({ type: 'developer.reward' }).reason, 'DEVELOPER_LOCKED');
+  const development = fixture(initial());
+  await development.game.start();
+  assert.equal(await development.game.unlockDeveloper('test'), true);
+  const reward = development.game.dispatch({ type: 'developer.reward' });
+  assert.equal(reward.ok, true);
+  assert.equal(reward.result.amount, 1e60);
+  assert.equal(development.game.select('state').resources.coins, 1e60);
+  for (const scope of ['run', 'r', 'ascension', 'total']) assert.equal(development.game.select('state').stats[scope].coins, 1e60);
 });
 
 

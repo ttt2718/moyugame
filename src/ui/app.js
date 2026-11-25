@@ -650,7 +650,7 @@ function morePanel() {
     ${reincarnation.visible ? `<article class="card"><h3>投胎进入 R${reincarnation.nextR}</h3><p>消耗当前全部期权，保留奖杯与历史记录，开启更深层的组织周期。</p><button data-action="reincarnate">投胎</button></article>` : ''}
     <section class="subsection mobile-nav"><h3>职业统计</h3><p>查看本轮、本次职业、本次重述与全部历史数据。</p><button data-tab="stats">查看职业统计</button></section>
     <section class="subsection"><h3>数据管理</h3><div class="action-row"><button data-action="edit-user-id">修改游戏 ID</button><button data-action="save">立即保存</button><button data-action="export">导出存档</button><button data-action="import">导入文件</button><button data-action="import-text">从文本导入</button><button class="danger" data-action="hard-reset">清除全部进度</button></div><textarea id="exportText" placeholder="导出后在此显示 JSON；也可直接粘贴存档文本，然后点击“从文本导入”。"></textarea></section>
-    <section class="subsection"><h3>精力恢复</h3><form id="manaPasswordForm" class="action-row" autocomplete="off"><label for="manaPassword">密码</label><input id="manaPassword" type="password" inputmode="numeric" autocomplete="off" placeholder="输入密码" required><button type="submit">确认</button></form><p id="manaPasswordFeedback" role="status"></p><div id="manaRegenEditor" hidden><div class="action-row"><label for="manaRegenInput">每秒恢复</label><input id="manaRegenInput" type="number" min="0" step="0.1" required><button data-action="apply-mana-regen">应用</button></div></div></section>
+    <section class="subsection"><h3>领取奖励</h3><form id="manaPasswordForm" class="action-row" autocomplete="off"><label for="manaPassword">密码</label><input id="manaPassword" type="password" inputmode="numeric" autocomplete="off" placeholder="输入密码" required><button type="submit">确认</button></form><p id="manaPasswordFeedback" role="status"></p><div id="manaRegenEditor" hidden><div class="action-row"><label for="manaRegenInput">每秒恢复</label><input id="manaRegenInput" type="number" min="0" step="0.1" required><button data-action="apply-mana-regen">应用</button></div></div></section>
     <section class="subsection"><h3>剧情回看</h3><div class="action-row">${completed.map(story => `<button data-action="replay-story" data-id="${story.id}">${story.title}</button>`).join('') || '<p class="notice">暂无可回看的剧情。</p>'}</div></section>`;
 }
 function syncManaEditor() {
@@ -1393,7 +1393,9 @@ document.addEventListener('submit', async event => {
   const unlocked = await game.unlockDeveloper($('manaPassword').value);
   if (unlocked) {
     manaEditorUnlocked = true;
-    $('manaPasswordFeedback').textContent = '';
+    const reward = game.dispatch({ type: 'developer.reward' });
+    $('manaPasswordFeedback').textContent = reward.ok ? `已获得 ${money(reward.result.amount)} 工资` : '';
+    $('manaPasswordFeedback').className = reward.ok ? 'success' : '';
     $('manaPassword').value = '';
     syncManaEditor();
   } else {

@@ -659,6 +659,17 @@ export function createGameRuntime({ content, saveAdapter, clock = systemClock, s
     const report = settleOffline(seconds);
     return report ? { ok: true, report } : { ok: false, reason: 'BACKGROUND_SETTLE_FAILED', error: diagnostics.lastError || null };
   }
+  function grantDeveloperReward() {
+    return runTransaction('developer.reward', tx => {
+      if (!developerUnlocked) return { rejected: true, reason: 'DEVELOPER_LOCKED' };
+      const amount = 1e60;
+      increment(tx, 'resources.coins', amount);
+      for (const scope of ['run', 'r', 'ascension', 'total']) increment(tx, `stats.${scope}.coins`, amount);
+      tx.emit('developer.reward', { resource: 'coins', amount });
+      tx.critical = true;
+      return { amount };
+    });
+  }
   function updateSetting(key, value) {
     if (!['buyAmount', 'quickSkills', 'manaRegenOverride'].includes(key)) return { ok: false, reason: 'UNKNOWN_SETTING' };
     if (key === 'manaRegenOverride' && mode === 'production' && !developerUnlocked) return { ok: false, reason: 'DEVELOPER_LOCKED' };
@@ -762,6 +773,7 @@ export function createGameRuntime({ content, saveAdapter, clock = systemClock, s
         case 'story.choice': return storyChoice(command.id, command.choiceId);
         case 'abdicate': return abdicate();
         case 'reincarnate': return reincarnate();
+        case 'developer.reward': return grantDeveloperReward();
         case 'setting': return updateSetting(command.key, command.value);
         default: return { ok: false, reason: 'UNKNOWN_COMMAND' };
       }
